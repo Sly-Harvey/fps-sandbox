@@ -235,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit hitUpper;
             if (!Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, rayHigherLength) && lowerNormalAngle >= 90f)
             {
-                rb.position -= new Vector3(0f, -stepSmooth, 0f);
+                rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
             }
         }
 
@@ -247,7 +247,7 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit hitUpper45;
             if (!Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(1.5f, 0f, 1), out hitUpper45, rayHigherLength) && lowerNormalAngle45 >= 90f)
             {
-                rb.position -= new Vector3(0f, -stepSmooth, 0f);
+                rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
             }
         }
 
@@ -259,7 +259,7 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit hitUpperMinus45;
             if (!Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(-1.5f, 0f, 1), out hitUpperMinus45, rayHigherLength) && lowerNormalAngleMinus45 >= 90f)
             {
-                rb.position -= new Vector3(0f, -stepSmooth, 0f);
+                rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
             }
         }
     }
