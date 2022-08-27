@@ -31,13 +31,21 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground Check")]
     public float playerHeight;
-    public LayerMask whatIsGround;
+    public LayerMask groundMask;
     bool grounded;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
+
+    [Header("Step Handling")]
+    public GameObject _stepRayUpper;
+    public GameObject _stepRayLower;
+    public float stepHeight = 0.3f;
+    public float stepSmooth = 0.1f;
+    public float rayLowerLength = 0.3f;
+    public float rayHigherLength = 0.2f;
 
     float horizontalInput;
     float verticalInput;
@@ -63,11 +71,14 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = moveDirection.normalized;
 
         startYScale = transform.localScale.y;
+
+        _stepRayUpper.transform.localPosition = new Vector3(_stepRayUpper.transform.position.x, stepHeight, _stepRayUpper.transform.position.z);
     }
 
     private void FixedUpdate()
     {
         movePlayer();
+        stepClimb();
     }
 
     private void Update()
@@ -78,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
         Physics.gravity = Gravity;
 
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
         if (grounded)
         {
             rb.drag = groundDrag;
@@ -212,5 +223,44 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 getSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
+    void stepClimb()
+    {
+        // forward hit angle
+        RaycastHit hitLower;
+        if(Physics.Raycast(_stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, rayLowerLength))
+        {
+            float lowerNormalAngle = Vector3.Angle(transform.up, hitLower.normal);
+            RaycastHit hitUpper;
+            if (!Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, rayHigherLength) && lowerNormalAngle >= 90f)
+            {
+                rb.position -= new Vector3(0f, -stepSmooth, 0f);
+            }
+        }
+
+        // 45 degree angle
+        RaycastHit hitLower45;
+        if (Physics.Raycast(_stepRayLower.transform.position, transform.TransformDirection(1.5f, 0f, 1), out hitLower45, rayLowerLength))
+        {
+            float lowerNormalAngle45 = Vector3.Angle(transform.up, hitLower45.normal);
+            RaycastHit hitUpper45;
+            if (!Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(1.5f, 0f, 1), out hitUpper45, rayHigherLength) && lowerNormalAngle45 >= 90f)
+            {
+                rb.position -= new Vector3(0f, -stepSmooth, 0f);
+            }
+        }
+
+        // minus 45 degree angle
+        RaycastHit hitLowerMinus45;
+        if (Physics.Raycast(_stepRayLower.transform.position, transform.TransformDirection(-1.5f, 0f, 1), out hitLowerMinus45, rayLowerLength))
+        {
+            float lowerNormalAngleMinus45 = Vector3.Angle(transform.up, hitLowerMinus45.normal);
+            RaycastHit hitUpperMinus45;
+            if (!Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(-1.5f, 0f, 1), out hitUpperMinus45, rayHigherLength) && lowerNormalAngleMinus45 >= 90f)
+            {
+                rb.position -= new Vector3(0f, -stepSmooth, 0f);
+            }
+        }
     }
 }
