@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
+    private Vector3 startPos;
 
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
@@ -80,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        startPos = transform.position;
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -98,6 +101,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < 2)
+            transform.position = startPos;
+
         _input();
         speedControl();
         stateHandler();
