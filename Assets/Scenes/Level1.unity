@@ -3839,6 +3839,8 @@ MonoBehaviour:
   walkSpeed: 7
   sprintSpeed: 12
   slideSpeed: 30
+  speedIncreaseMultiplier: 1.5
+  slopeIncreaseMultiplier: 2.5
   groundDrag: 5
   Gravity: {x: 0, y: -24.525, z: 0}
   jumpForce: 12
