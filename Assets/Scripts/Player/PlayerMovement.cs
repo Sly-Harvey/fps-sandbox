@@ -101,8 +101,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.y < 2)
-            transform.position = startPos;
+        //if (transform.position.y < 2)
+            //transform.position = startPos;
 
         _input();
         speedControl();
