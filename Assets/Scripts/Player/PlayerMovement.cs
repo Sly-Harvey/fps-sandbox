@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
 
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
-    private Vector3 startPos;
 
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
@@ -81,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        startPos = transform.position;
 
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -101,9 +99,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        //if (transform.position.y < 2)
-            //transform.position = startPos;
-
         _input();
         speedControl();
         stateHandler();
@@ -249,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
         else if(!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
-        rb.useGravity = !OnSlope();
+        if(!wallRunning) rb.useGravity = !OnSlope();
     }
 
     void speedControl()
@@ -342,4 +337,5 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
 }
