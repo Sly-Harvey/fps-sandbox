@@ -5,6 +5,9 @@ using UnityEngine;
 public class WallRunning : MonoBehaviour
 {
     [Header("Wallrunning")]
+    public float wallRunFov = 90f;
+    public float wallRunTilt = 5f;
+
     public LayerMask wallMask;
     public LayerMask groundMask;
     public float wallRunForce;
@@ -37,9 +40,9 @@ public class WallRunning : MonoBehaviour
     public float gravityCounterForce;
 
     [Header("References")]
-    private Rigidbody rb;
     public Transform player;
     private PlayerMovement pm;
+    private Rigidbody rb;
 
     private void Start()
     {
@@ -138,9 +141,10 @@ public class WallRunning : MonoBehaviour
         wallRunTimer = maxWallRunTime;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        cam.doFov(90f);
-        if(leftWall)cam.doTilt(-5f);
-        if (rightWall) cam.doTilt(5f);
+
+        cam.doFov(wallRunFov);
+        if(leftWall)cam.doTilt(-wallRunTilt);
+        if (rightWall) cam.doTilt(wallRunTilt);
     }
 
     private void stopWallRun()
