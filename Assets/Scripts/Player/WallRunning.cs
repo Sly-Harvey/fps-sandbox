@@ -35,11 +35,11 @@ public class WallRunning : MonoBehaviour
     private bool rightWall;
 
     [Header("Gravity")]
-    public PlayerCam cam;
     public bool useGravity;
     public float gravityCounterForce;
 
     [Header("References")]
+    public PlayerCam cam;
     public Transform player;
     private PlayerMovement pm;
     private Rigidbody rb;
