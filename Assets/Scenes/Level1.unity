@@ -4833,15 +4833,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e311d09cc620892418c1020346117b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 6
-  sprintSpeed: 9
+  walkSpeed: 7
+  sprintSpeed: 10
   slideSpeed: 30
   wallRunSpeed: 8.5
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
-  groundDrag: 5
+  groundDrag: 9
   Gravity: {x: 0, y: -20, z: 0}
-  jumpForce: 10
+  jumpForce: 11.5
   jumpCooldown: 0.25
   airMultiplier: 0.4
   crouchSpeed: 3.5
@@ -6851,7 +6851,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1718183533}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2cec0538628c7e04dab811843e971276, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
