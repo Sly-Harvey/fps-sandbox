@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerDevTools : MonoBehaviour
 {
     Vector3 startPos;
+
+    Quaternion startRotation;
+
     public KeyCode respawnKey = KeyCode.E;
 
     private void Start()
